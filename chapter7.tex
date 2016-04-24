@@ -1,0 +1,90 @@
+\chapter{Associative Memory Network}
+Associative memory networks are single input, single output layer networks in which weights are determined in order to store a set of pattern associations. They are able to recall the desired response patterns when a given pattern is similar to the stored pattern. 
+$$\mathbf{{(x_1 y_1), (x_2 y_2), \ldots, (x_p y_p)}}$$
+Association vectors are defined as:
+$$\mathbf{x_k \rightarrow y_k}$$
+\begin{description}
+\item[Auto-associative] $\mathbf{x_k = y_k}$
+\item[Hetero-associative] $\mathbf{x_k \ne y_k}$
+\end{description}
+
+\section{Linear Feed-forward Associative Memory network}
+Linear Feed-forward Associative Memory (LAM) network is a single input, single output layer with linear activation function. \\
+The synaptic input:
+$$\mathbf{u=Wx}$$
+The output activation:
+$$\mathbf{y=\beta u}$$
+\begin{center} where $\beta$ is the slope of the linear function\end{center}
+\clearpage
+\noindent LAM networks learn using the Hebbian rule. The weight matrix is \emph{given} by:
+$$\mathbf{W_k = y_k x_k^{T}}$$
+\begin{center} where $\mathbf{W_k}$ weight matrix learns the $k$ th pattern association\end{center}
+The weight matrix to learn all the associations is \emph{given} by:
+\begin{equation*}
+\begin{split}
+\mathbf{W} &= \sum_{k=1}^{P} \mathbf{W_k} \\
+&= \sum_{k=1}^{P} \mathbf{y_k x_k^{T}}
+\end{split}
+\label{weight_lam}
+\end{equation*}
+
+\section{Cross-Talk versus Perfect Recall}
+If inputs are \emph{uncorrelated or orthogonal} the Hebbian rule make \emph{perfect recall}. Otherwise, the output is corrupted or has \emph{cross-talk}. \\
+Substituting \ref{weight_lam} to output, with $\mathbf{x_l}$ as input:
+\begin{equation}
+\begin{split}
+\mathbf{y} &= \mathbf{Wx_l} \\
+&= \Big(\sum_{k=1}^{P} \mathbf{y_k x_k^{T}} \Big) \mathbf{x_l} \\
+&= \mathbf{y_l x_l^{T} x_l} + \sum_{k=1,k \ne l} \mathbf{y_k x_k^{T} x_l}
+\end{split}
+\end{equation}
+If $\mathbf{x_l}$ and $\mathbf{x_k}$ are orthogonal:
+$$\mathbf{x_l^{T} x_k} = 0$$
+Then, perfect recall of the learned pattern:
+$$\mathbf{y = y_l \| x_l \|^{2}}$$
+$$\mathbf{y \propto y_l}$$
+Otherwise, cross-talk:
+$$\sum_{k=1,k \ne l} \mathbf{y_k x_k^{T} x_l}$$
+
+\section{Problem with LAM Network}
+Both auto and heterogeneous associative memory network do not function well in the presence of noise. 
+Let distorted input as:
+$$\mathbf{x}_l^{i} = \mathbf{x}_l + \Delta_l$$
+Then the output:
+\begin{equation*}
+\begin{split}
+\mathbf{y} &= \mathbf{W} \mathbf{x}_l' \\
+&= \mathbf{W} (\mathbf{x}_l + \Delta_l) \\
+&= \Big(\sum_{k=1}^{P} \mathbf{y_k x_k^{T}}\Big) (\mathbf{x_l} + \Delta_l) \\
+&= \mathbf{y_l x_l^{T} x_l + y_l x_l^{T} \Delta_l + \Big(\sum_{k \ne l}^{P} \mathbf{y_k x_k^{T} x_l}\Big) + \Big(\sum_{k \ne l}^{P} \mathbf{y_k x_k^{T} \Delta_l}\Big)}
+\end{split}
+\end{equation*}
+Since orthogonal: 
+$$\mathbf{y} = \mathbf{y_l x_l^{T} x_l + y_l x_l^{T} \Delta_l +  \Big(\sum_{k \ne l}^{P} \mathbf{y_k x_k^{T} \Delta_l}\Big)}$$
+
+\section{Recurrent/Hopfield AMN}
+Suppressing noise component by thresholding the outputs and recycling of the output to the input. Weight is still based on Hebbian's learning rule, but $w_{ii} = 0$
+
+\section{Bidirectional Associative Memory Network}
+Bidirectional Associative Memory (BAM) network is a \emph{recurrent hetero-associative memory} of two layers of neurons. \\
+Synaptic input to the output layer:
+$$\mathbf{u = Wx}$$
+The output:
+$$
+y_j = 
+\begin{cases}
+1 & u_j > 0 \\
+-1 & u_j \le 0
+\end{cases}
+$$
+Synaptic input back to the input layer:
+$$\mathbf{v = W^{T} y}$$
+The input:
+$$
+x_j = 
+\begin{cases}
+1 & v_i > 0 \\
+-1 & v_i \le 0
+\end{cases}
+$$
+Repeat until convergence

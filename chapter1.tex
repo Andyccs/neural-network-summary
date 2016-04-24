@@ -1,0 +1,93 @@
+\chapter{Introduction to Neural Network}
+
+\section{Biological Neural Networks}
+
+\begin{description}
+\item[Soma] cell body which processes incoming activations and converts input into output activation
+\item[Dendrites] receptive zones that receive activation signals from other neurons
+\item[Axon] transmission lines that send activation signals to other neurons
+\item[Synapses] allow weighted signal transmission between the dendrites and axons
+\end{description}
+
+\section{Artificial Neuron}
+Input signal vector:
+$$\mathbf{x}=(x_1x_2\ldots x_p)^{T}$$
+The weight vector:
+$$\mathbf{w}=(w_1w_2\ldots w_p)^{T}$$
+Total synaptic input:
+\begin{equation*}
+\begin{split}
+u &= \sum_{i=1}^{p} w_ix_i - \theta \\
+\mathbf{u} &= \mathbf{w}^{T} \mathbf{x} - \pmb{\theta}
+\end{split}
+\end{equation*}
+Output Activation:
+$$\mathbf{y} = \Phi(\mathbf{u})$$
+\begin{center}where $\Phi$ is activation function\end{center}
+
+\section{Typical ANN Activation Functions}
+Threshold Activation Function:
+$$\Phi (u)=
+\begin{cases} 
+    1 & u>0 \\
+    0 & otherwise
+\end{cases}
+$$
+Linear Activation Function:
+$$\Phi (u) = u$$
+Ramp Activation Function:
+$$\Phi (u) = max\{ 0, min\{ 1, u + 0.5 \} \}$$
+Unipolar Sigmoid Activation Function:
+$$\Phi (u) = \frac{a}{1+exp(-bu)}$$
+Bipolar Sigmoid Activation Function:
+\begin{equation*}
+\begin{split}
+\Phi (u) &= a\Bigg(\frac{1-exp(-bu)}{1+exp(-bu)}\Bigg) \\
+&= a\Bigg(-1 + \frac{2}{1+exp(-bu)}\Bigg)
+\end{split}
+\end{equation*}
+
+\section{ANN Architecture}
+\begin{description}
+\item[Two-Layer Feed-forward Network] input layer + output layer
+\item[Multilayer Feed-forward Network] input layer + hidden layers + output layer
+\item[Recurrent networks without hidden neurons] single layer of neurons with each neuron feeding its output signal back to the input layer
+\end{description}
+
+\section{Feed-forward ANN Analysis}
+Weight matrix to hidden layer:
+$$\mathbf{W = [w_1w_2 \ldots w_J]^{T}}$$
+Synaptic inputs to hidden layer:
+$$\mathbf{u=Wx}$$
+\clearpage
+\noindent Output of hidden layer:
+$$\mathbf{y}=f(\mathbf{u})$$
+\begin{center}where $f$ is activation function of hidden layer neurons \end{center}
+Weight matrix to output layer:
+$$\mathbf{V = [v_1v_2 \ldots v_J]^{T}}$$
+Synaptic inputs to output layer:
+$$s=Vy$$
+Output:
+$$\mathbf{z} = g(\mathbf{s})$$
+\begin{center}where $g$ is activation function of output layer neurons \end{center}
+
+\section{ANN Learning}
+\begin{description}
+\item[Supervised Learning] For each training input pattern, the network is presented with the correct target answer by a teacher
+\item[Unsupervised Learning] For each training inputs, the network adjusts weights without knowing the correct target
+\end{description}
+
+\section{Characteristics of ANN}
+\begin{itemize}
+\item Parallel and distributed processing
+\item Adaptiveness
+\item Generalization
+\item Fault-tolerance
+\item Ease of construction
+\end{itemize}
+
+\section{ANN Limitations}
+\begin{itemize}
+\item Operational problems, computational time increase
+\item Intractable system, black boxes
+\end{itemize}

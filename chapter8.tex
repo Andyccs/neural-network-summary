@@ -1,0 +1,49 @@
+\chapter{Stochastic Neural Networks}
+Neurons fire in a probabilistic manner. The activation function of a stochastic neuron is non-deterministic, but probabilistic. 
+
+\section{Boltzmann Machine}
+Boltzmann machine is a generalization of Hopfield network. Boltzmann-Gibbs distribution:
+$$P(1|u)=\frac{1}{1+e^{-u/T}}$$
+\begin{center}where T is the temperature of transitions \end{center}
+
+\section{Stochastic Recurrent Network}
+Consider transition from ($u_1$, $u_2$) to ($u_1'$, $u_2$). Number of state $N$ is 2.
+\begin{equation*}
+\begin{split}
+P(u_1\ change\ to\ u_1') &= P(first\ neuron\ to\ fire) \times P(u_1' | u_1) \\
+&= \frac{P(u_1' | u_1)}{N}
+\end{split}
+\end{equation*}
+If $u_1$' is 1 and $u_1$ is 0, then:
+$$P(u_1\ change\ to\ u_1') = \frac{P(1| u_1)}{N}$$
+And the numerator can be found using Boltzmann equation and u is 0
+
+\section{Network Entropy}
+Entrophy gives a measure of randomness of the network at a given state.
+$$H_i=-\sum{p(i,j)log_e p(i,j)}$$
+
+\section{State-Transition Matrix}
+$$
+S = 
+\begin{bmatrix}
+p(0,0) & p(1,0) & \cdots & p(m-1, 0) \\
+p(0,1) & p(1,1) & \cdots & p(m-1, 1) \\
+\vdots & \vdots & \ddots & \vdots \\
+p(0,m-1) & p(1,m-1) & \cdots & p(m-1,m-1)
+\end{bmatrix}
+$$
+Columns: current states \\
+Rows: next states \\
+$p(i|j)$: probability of transition from state i to state j
+
+\section{Markov Chain}
+$$\boldsymbol{X}(0) \rightarrow \boldsymbol{X}(1) \rightarrow \ldots \ \boldsymbol{X}(k)$$
+$\boldsymbol{X}(k)$ is the vector of state probabilities at time $k$ \\ 
+$X_0(k)$ is probability of the network being at state $S_i$ at time $k$
+
+$$\boldsymbol{X}(k+1) = \boldsymbol{S}\boldsymbol{X}(k)$$
+
+$$\boldsymbol{X}(k) = \boldsymbol{S}^{k} \boldsymbol{X}(0)$$
+
+\section{Simulated Annealing}
+Simulated Annealing provides a \emph{scheme} that allows a network to jump out of a local minima towards the \emph{global minima}. Simulated Annealing begins at high temperature to have sufficient randomness for the neurons to jump out of local minima and gradually lowers the temperature to facilitate settling down at global minima.

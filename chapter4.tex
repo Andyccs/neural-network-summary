@@ -1,0 +1,34 @@
+\chapter{Model Selection}
+Goal: determine the optimum parameters or the model for a given approximation or classification problem
+
+\section{Performance Estimation}
+Mean-square error:
+$$MSE=\frac{1}{n} \sum_{i=1}^{n}(x_i - \bar{x}_i)^{2}$$
+Root-mean square error:
+$$RMSE=\sqrt{\frac{1}{n} \sum_{i=1}^{n}(x_i - \bar{x}_i)^{2}}$$
+
+\begin{description}
+\item[Apparent error] training error, the error on the training data
+\item[True error] the error that will be obtained in use
+\item[Test error] an estimate of the true error obtained by testing the network on some independent data
+\end{description}
+
+\noindent Validation Methods:
+\begin{itemize}
+\item Holdout Method: split the entire dataset into training set and testing set
+\item Random Sampling Methods: performs $K$ data splits randomly and retrain the classifier from scratch for each split
+\item K-fold Cross Validation: For each of $K$ experiments, use K-1 folds for training and the remaining one fold for testing
+\item Leave one out Cross-Validation: $K=N$ in k-fold cross validation
+\end{itemize}
+
+\section{Three-Way Data Splits Methods}
+\begin{description}
+\item[Training set] examples for learning to fit the parameters
+\item[Validation set] examples to determine the error of the classifiers
+\item[Training + Validation set] combine examples used to re-train classifier
+\item[Test set] examples used only to assess the performance of trained classifier
+\end{description}
+
+\section{Model Complexity}
+Simple model might not able to solve a task (underfitting) \\ \\
+Complex model might not able to generalize from small and noisy dataset (overfitting)

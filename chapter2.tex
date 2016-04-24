@@ -1,0 +1,103 @@
+\chapter{Perceptron}
+
+\section{Linear Classifier}
+A linear classifier implements a decision boundary represented by a straight line in the multidimensional feature space.
+The discriminant function:
+\begin{equation*}
+\begin{split}
+f(\mathbf{x}) &=\sum_{i=0}^{I} w_i x_i \\
+&= \mathbf{w^{T}x}
+\end{split}
+\end{equation*}
+The decision boundary is given by:
+$$f(\mathbf{x})=0$$
+
+\section{Simple Perceptron}
+Net synaptic input:
+$$\mathbf{u} = \sum_{i=0}^{I} x_i w_i $$
+\begin{center}where $w_0 = \theta$ and $x_0=-1$ \end{center}
+The output of the neuron unit is:
+$$y = \Phi(\mathbf{u})$$
+For the rest of this section, we look at learning algorithm for discrete perceptron, using hard limiter as the output activation function.
+
+\subsection{Basic Perceptron Learning Algorithm (Minsky)}
+In each iteration, the weight is updated by:
+$$w_{new} =
+\begin{cases} 
+    w_{old} + x & y=0\ and\ d=1 \\
+    w_{old} - x & y=1\ and\ d=0 \\
+    w_{old} & if y==d
+\end{cases}
+$$
+
+\subsection{Modified Perceptron Learning Algorithm}
+The weights change proportional to the difference between the desired output and perceptron output:
+$$Error, \varepsilon = d - \Phi(u)$$
+$$\mathbf{w}^{new}=\mathbf{w}^{old} + \alpha \varepsilon \mathbf{x}$$
+\begin{center} 
+where learning factor ($0< \alpha \le 1$) and 
+$\varepsilon \in \{+1, 0, 1\}$
+\end{center}
+\section{Continuous Perceptron}
+The adjustment of weight vector is resolved by using \emph{gradient descent} algorithm:
+$$\mathbf{\triangle w} = - \alpha \frac{\partial E(\mathbf{w})}{\partial \mathbf{w}}$$
+\begin{equation}
+\begin{split}
+\mathbf{w^{new}} &= \mathbf{w^{old} + \triangle w } \\
+&= \mathbf{w^{old}} - \alpha \frac{\partial E(\mathbf{w})}{\partial w}
+\end{split}
+\label{weight_update}
+\end{equation}
+The error function is:
+$$E(\mathbf{w})=\frac{1}{2}(d-o)^{2}$$
+\begin{center}
+where 
+$o = f(u)$,
+$u=\mathbf{w^{T}x}$
+\end{center}
+The gradient of error function:
+\begin{equation}
+\begin{split}
+\frac{\partial E(\mathbf{w})}{\partial \mathbf{w}} &= \frac{1}{2} \frac{\partial (d-o)^{2}}{\partial \mathbf{w}} \\
+&= - (d-o) \frac{\partial f(u)}{\partial \mathbf{w}} \\
+&= - (d-o) \frac{\partial f(u)}{\partial u} \frac{\partial u}{\partial \mathbf{w}}
+\end{split}
+\label{error_derive}
+\end{equation}
+The synaptic input is:
+\begin{equation}
+\begin{split}
+u &= \sum_{i=0}^{I} w_i x_i \\
+\frac{\partial u}{\partial w_i} &= x_i \\
+\frac{\partial u}{\partial \mathbf{w}} &= \mathbf{x}
+\end{split}
+\label{input_derive}
+\end{equation}
+\noindent Substituting \ref{input_derive} to \ref{error_derive}:
+\begin{equation}
+\frac{\partial E(\mathbf{w})}{\partial \mathbf{w}} = - (d-o) \frac{\partial f(u)}{\partial u} \mathbf{x}
+\label{error_derive_input_derive}
+\end{equation}
+\noindent Substituting \ref{error_derive_input_derive} to \ref{weight_update}
+\begin{equation}
+\begin{split}
+\mathbf{w}^{new} &= \mathbf{w}^{old} + \alpha (d-o) \frac{\partial f(u)}{\partial u} \mathbf{x} \\
+\mathbf{w}^{new} &= \mathbf{w}^{old} + \alpha \delta \mathbf{x}
+\end{split}
+\label{weight_update_2}
+\end{equation}
+\begin{center}where $\delta = (d-o) \frac{\partial f(u)}{\partial u}$\end{center}
+
+\subsubsection{Unipolar Sigmoid Function}
+$$f(u) = o = \frac{a}{1+exp(-bu)}$$
+$$\frac{\partial f(u)}{\partial u} = by \Big(1- \frac{y}{a}\Big)$$
+
+\subsubsection{Bipolar Sigmoid Function}
+$$f(u) = o = \frac{a(1-exp(-bu))}{1+exp(-bu)}$$
+$$\frac{\partial f(u)}{\partial u} = \frac{ab}{2} \Big(1-\frac{o^{2}}{a^{2}}\Big)$$
+
+\section{Limitation of Perceptron}
+\begin{itemize}
+\item A perceptron can perform pattern classification only on linearly separable patterns
+\item The algorithm may stuck in local minima, sensitive to the starting point
+\end{itemize}
